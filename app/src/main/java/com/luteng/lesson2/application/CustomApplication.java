@@ -13,7 +13,7 @@ public class CustomApplication extends Application{
     @Override
     public void onCreate() {
         super.onCreate();
-        //10M内存村存图片
+        //10M内存村存图片,多余30M就删除了
         Picasso.Builder downloader = new Picasso.Builder(this).memoryCache(new LruCache(10 << 20))
                 .downloader(new OkHttpDownloader(getCacheDir(), 30 << 20));
         Picasso picasso = downloader

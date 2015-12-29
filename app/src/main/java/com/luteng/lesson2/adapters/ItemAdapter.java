@@ -13,6 +13,7 @@ import com.luteng.lesson2.R;
 import com.luteng.lesson2.entity.Item;
 import com.luteng.lesson2.entity.Response;
 import com.luteng.lesson2.utils.CircleTransform;
+import com.luteng.lesson2.utils.Enjoiner;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -58,7 +59,7 @@ public class ItemAdapter extends BaseAdapter {
         ViewHolder holder = (ViewHolder) convertView.getTag();
         if (item.getUser() != null) {
             holder.name.setText(item.getUser().getLogin());
-            Picasso.with(context).load(getIconURL(item.getUser().getId(),item.getUser().getIcon()))
+            Picasso.with(context).load(Enjoiner.getIconURL(item.getUser().getId(), item.getUser().getIcon()))
                     .transform(new CircleTransform())
                     .into(holder.icon);
         } else {
@@ -70,11 +71,11 @@ public class ItemAdapter extends BaseAdapter {
             holder.image.setVisibility(View.GONE);
         } else {
             holder.image.setVisibility(View.VISIBLE);
-            Log.d("ItemAdapter", "s = 11111111111  " + getImageURL(item.getImage()));
+            Log.d("ItemAdapter", "s = 11111111111  " + Enjoiner.getImageURL(item.getImage()));
             // .fit()//定义个ImageView，在ListView不好用
             // .centerInside()//剪切还是填充
             Picasso.with(context)
-                    .load(getImageURL(item.getImage()))
+                    .load(Enjoiner.getImageURL(item.getImage()))
                     .placeholder(R.mipmap.ic_launcher)//下载中暂时填充
                     .error(R.mipmap.ic_launcher)//下载失败图片
                     .resize(parent.getWidth(), 0)
@@ -83,22 +84,7 @@ public class ItemAdapter extends BaseAdapter {
         return convertView;
     }
 
-    //下面static是工具类
-    public static String getImageURL(String image) {
-        String url = "http://pic.qiushibaike.com/system/pictures/%s/%s/%s/%s";
-        Pattern pattern = Pattern.compile("(\\d+)\\d{4}");
-        Matcher matcher = pattern.matcher(image);
-        matcher.find();
-        //TODO:检查网络，下载图片的类型
-        String s = String.format(url,matcher.group(1),matcher.group(),"small",image);
-        return s;
-    }
 
-    public static String getIconURL(long id, String icon) {
-        String url = "http:///pic.qiushibaike.com/system/avtnew/%s/%s/thumb/%s";
-        //return String.format(url,id/1000)
-        return String.format(url,id/10000,id,icon);
-    }
 
     private static class ViewHolder {
         private ImageView icon;

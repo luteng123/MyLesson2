@@ -17,7 +17,7 @@ public class CircleTransform implements Transformation{
         paint.setShader(new BitmapShader(source, Shader.TileMode.CLAMP, Shader.TileMode.CLAMP));
         //Math.min(source.getWidth,source.getHeight);//防止不是正方形
         new Canvas(result).drawCircle(source.getWidth() / 2, source.getHeight() / 2,
-                Math.min(source.getWidth(),source.getHeight()) / 2, paint);
+                Math.max(source.getWidth(),source.getHeight()) / 2, paint);
         //result.getByteCount()//内存中的大小
         //int i = result.getRowBytes() * result.getHeight();
 
